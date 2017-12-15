@@ -85,6 +85,7 @@ def create_place(city_id):
     if matching_city and matching_user:
         for key, val in new_place.items():
                 setattr(matching_city, key, val)
+        new_place["city_id"] = city_id
         place_obj = Place(**new_place)
         storage.new(place_obj)
         storage.save()
