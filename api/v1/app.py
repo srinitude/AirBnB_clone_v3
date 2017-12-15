@@ -4,7 +4,7 @@ BluePrint Setup
 """
 from flask import Flask, Blueprint, jsonify
 from models import storage
-from api.v1.views import app_views, states, cities
+from api.v1.views import app_views, states, cities, amenities
 import os
 
 app = Flask(__name__)
@@ -12,6 +12,10 @@ app.url_map.strict_slashes = False
 app.register_blueprint(app_views, url_prefix="/api/v1")
 app.register_blueprint(states, url_prefix="/api/v1/states")
 app.register_blueprint(cities, url_prefix="/api/v1/cities")
+app.register_blueprint(amenities, url_prefix="/api/v1/amenities")
+app.register_blueprint(amenities, url_prefix="/api/v1/users")
+app.register_blueprint(amenities, url_prefix="/api/v1/places")
+app.register_blueprint(amenities, url_prefix="/api/v1/reviews")
 
 
 @app.teardown_appcontext
