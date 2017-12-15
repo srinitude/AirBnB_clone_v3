@@ -5,7 +5,8 @@ BluePrint Setup
 from flask import Flask, Blueprint, jsonify
 from flask_cors import CORS
 from models import storage
-from api.v1.views import app_views, states, cities, amenities, places, users
+from api.v1.views import (app_views, states, cities,
+                          amenities, places, users, reviews)
 import os
 
 app = Flask(__name__)
@@ -17,7 +18,7 @@ app.register_blueprint(cities, url_prefix="/api/v1/cities")
 app.register_blueprint(users, url_prefix="/api/v1/users")
 app.register_blueprint(amenities, url_prefix="/api/v1/amenities")
 app.register_blueprint(places, url_prefix="/api/v1/places")
-# app.register_blueprint(reviews, url_prefix="/api/v1/reviews")
+app.register_blueprint(reviews, url_prefix="/api/v1/reviews")
 
 
 @app.teardown_appcontext

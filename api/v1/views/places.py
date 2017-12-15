@@ -49,3 +49,45 @@ def update_place_with_id(place_id):
         storage.close()
         return jsonify(matching_place.to_dict())
     abort(404)
+
+
+@places.route("/<string:place_id>/reviews", methods=['GET'])
+def all_review(place_id):
+    """Route to get all of the review"""
+    reviews = storage.all("Review").values()
+    all_review = []
+    matching_place = storage.get("Place", place_id)
+    if matching_place:
+        for review in reviews:
+            if review.place_id == place_id:
+                dict_form = review.to_dict()
+                all_review.append(dict_form)
+    return jsonify(all_review)
+
+
+@places.route("/<string:place_id>/reviews", methods=['POST'])
+def create_review(place_id):
+    """Create a new review"""
+    if not storage.get("Place", place_id):
+        abort(404)
+    if not request.is_json:
+        abort(400, "Not a JSON")
+    new_review = request.get_json()
+    if new_place.get("user_id") is None:
+        abort(400, "Missing user_id")
+    user_id = new_place.get("user_id")
+    if not storage.get("User", user_id):
+        abort(404)
+    if new_place.get("text") is None:
+        abort(400, "Missing text")
+    matching_place = storage.get("Place", place_id)
+    matching_user = storage.get("User", user_id)
+    if matching_place and matching_user:
+        for key, val in new_place.items():
+                setattr(matching_user, key, val)
+        new_place["place_id"] = place_id
+        review_obj = Place(**new_review)
+        storage.new(review_obj)
+        storage.save()
+        storage.close()
+        return jsonify(review_obj.to_dict()), 201
