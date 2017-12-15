@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from flask import Flask, Blueprint
+from flask import Flask, Blueprint, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -12,6 +12,11 @@ app.register_blueprint(app_views, url_prefix="/api/v1")
 def close(f):
     """ app teardown """
     storage.close()
+
+@app.errorhandler(404)
+def page_not_found(error):
+    """ 404 alternate """
+    return jsonify({"error": "Not found"})
 
 if __name__ == '__main__':
     HBNB_HOST = os.getenv("HBNB_API_HOST", "0.0.0.0")
