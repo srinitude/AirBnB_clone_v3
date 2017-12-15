@@ -76,4 +76,3 @@ def update_amenity_with_id(amenity_id):
         storage.close()
         return jsonify(matching_amenity.to_dict())
     abort(404)
-

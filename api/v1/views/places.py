@@ -49,4 +49,3 @@ def update_place_with_id(place_id):
         storage.close()
         return jsonify(matching_place.to_dict())
     abort(404)
-

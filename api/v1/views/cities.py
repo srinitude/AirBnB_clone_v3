@@ -49,7 +49,7 @@ def update_city_with_id(city_id):
         storage.close()
         return jsonify(matching_city.to_dict())
     abort(404)
-    
+
 
 @cities.route("/<string:city_id>/places", methods=['GET'])
 def all_places(city_id):
@@ -60,6 +60,7 @@ def all_places(city_id):
         dict_form = place.to_dict()
         all_place.append(dict_form)
     return jsonify(all_place)
+
 
 @cities.route("/<string:city_id>/places", methods=['POST'])
 def create_place(city_id):
@@ -82,5 +83,3 @@ def create_place(city_id):
         storage.close()
         return jsonify(place_obj.to_dict()), 201
     abort(404)
-
-
