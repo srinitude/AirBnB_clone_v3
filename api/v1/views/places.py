@@ -5,6 +5,7 @@ All of the routes for place resource
 from flask import jsonify, abort, request, Blueprint
 from models import storage
 from models.place import Place
+from models.review import Review
 
 places = Blueprint("places", __name__)
 
@@ -84,10 +85,8 @@ def create_review(place_id):
     matching_place = storage.get("Place", place_id)
     matching_user = storage.get("User", user_id)
     if matching_place and matching_user:
-        for key, val in new_review.items():
-                setattr(matching_user, key, val)
         new_review["place_id"] = place_id
-        review_obj = Place(**new_review)
+        review_obj = Review(**new_review)
         storage.new(review_obj)
         storage.save()
         storage.close()
