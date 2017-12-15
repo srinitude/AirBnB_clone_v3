@@ -73,19 +73,19 @@ def create_review(place_id):
     if not request.is_json:
         abort(400, "Not a JSON")
     new_review = request.get_json()
-    if new_place.get("user_id") is None:
+    if new_review.get("user_id") is None:
         abort(400, "Missing user_id")
-    user_id = new_place.get("user_id")
+    user_id = new_review.get("user_id")
     if not storage.get("User", user_id):
         abort(404)
-    if new_place.get("text") is None:
+    if new_review.get("text") is None:
         abort(400, "Missing text")
     matching_place = storage.get("Place", place_id)
     matching_user = storage.get("User", user_id)
     if matching_place and matching_user:
-        for key, val in new_place.items():
+        for key, val in new_review.items():
                 setattr(matching_user, key, val)
-        new_place["place_id"] = place_id
+        new_review["place_id"] = place_id
         review_obj = Place(**new_review)
         storage.new(review_obj)
         storage.save()
