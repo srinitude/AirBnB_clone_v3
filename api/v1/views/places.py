@@ -40,7 +40,7 @@ def update_place_with_id(place_id):
         abort(400, "Not a JSON")
     dict_updates = request.get_json()
     matching_place = storage.get("Place", place_id)
-    forbidden_keys = ["id", "created_at", "updated_at"]
+    forbidden_keys = ["id", "created_at", "updated_at", "user_id", "city_id"]
     if matching_place:
         for key, val in dict_updates.items():
             if key not in forbidden_keys:
