@@ -23,7 +23,7 @@ def close(f):
 @app.errorhandler(404)
 def page_not_found(error):
     """ 404 alternate """
-    return jsonify({"error": "Not found"})
+    return jsonify({"error": "Not found"}), 404
 
 if __name__ == '__main__':
     HBNB_HOST = os.getenv("HBNB_API_HOST", "0.0.0.0")
