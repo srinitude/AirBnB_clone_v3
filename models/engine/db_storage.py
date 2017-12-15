@@ -65,7 +65,7 @@ class DBStorage:
         self.__session.add(obj)
 
     def save(self):
-        """Saves the current state of the session""" 
+        """Saves the current state of the session"""
         self.__session.commit()
 
     def delete(self, obj=None):
