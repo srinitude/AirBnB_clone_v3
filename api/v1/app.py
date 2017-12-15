@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+BluePrint Setup
+"""
 from flask import Flask, Blueprint, jsonify
 from models import storage
 from api.v1.views import app_views, states, cities
