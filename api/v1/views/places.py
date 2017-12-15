@@ -62,7 +62,8 @@ def all_review(place_id):
             if review.place_id == place_id:
                 dict_form = review.to_dict()
                 all_review.append(dict_form)
-    return jsonify(all_review)
+        return jsonify(all_review)
+    abort(404)
 
 
 @places.route("/<string:place_id>/reviews", methods=['POST'])
