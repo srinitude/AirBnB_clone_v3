@@ -70,6 +70,17 @@ class DBStorage:
         if obj:
             self.__session.delete(obj)
 
+    def get(self, cls, id):
+        all_obj = self.all(cls).values()
+        for obj in all_obj:
+            if obj.id == id:
+                return obj
+        return None
+
+    def count(self, cls=None):
+        all_obj = self.all(cls)
+        return len(all_obj)
+
     def close(self):
         """Dispose of current session if active"""
         self.__session.remove()
