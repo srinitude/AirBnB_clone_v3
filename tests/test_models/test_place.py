@@ -59,6 +59,7 @@ class TestPlaceDocs(unittest.TestCase):
                             "{:s} method needs a docstring".format(func[0]))
 
 
+unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "Not Using MySQL")
 class TestPlace(unittest.TestCase):
     """Test the Place class"""
     def test_is_subclass(self):
