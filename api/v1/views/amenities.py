@@ -52,7 +52,6 @@ def create_amenity():
     new_amenity = request.get_json()
     if new_amenity.get("name") is None:
         abort(400, "Missing name")
-    new_amenity["name"] = "WiFi"
     amenity_obj = Amenity(**new_amenity)
     storage.new(amenity_obj)
     storage.save()
