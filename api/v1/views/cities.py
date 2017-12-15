@@ -56,10 +56,13 @@ def all_places(city_id):
     """Route to get all of the place"""
     places = storage.all("Place").values()
     all_place = []
-    for place in places:
-        dict_form = place.to_dict()
-        all_place.append(dict_form)
-    return jsonify(all_place)
+    matching_city = storage.get("City", city_id)
+    if matching_city:
+        for place in places:
+            dict_form = place.to_dict()
+            all_place.append(dict_form)
+        return jsonify(all_place)
+    abort(404)
 
 
 @cities.route("/<string:city_id>/places", methods=['POST'])
