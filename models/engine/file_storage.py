@@ -60,6 +60,7 @@ class FileStorage:
             pass
 
     def get(self, cls, id):
+        """Gets an object"""
         all_obj = self.all(cls).values()
         if len(all_obj) == 0:
             return None
@@ -69,6 +70,7 @@ class FileStorage:
         return None
 
     def count(self, cls=None):
+        """Gets the count"""
         all_obj = self.all(cls)
         return len(all_obj)
 
@@ -81,3 +83,8 @@ class FileStorage:
     def close(self):
         """Deserialize JSON file to objects"""
         self.reload()
+
+    def reset(self):
+        """Reset all objects in memory"""
+        self.save()
+        self.__objects = {}

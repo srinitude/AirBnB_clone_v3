@@ -72,6 +72,8 @@ class DBStorage:
 
     def get(self, cls, id):
         all_obj = self.all(cls).values()
+        if len(all_obj) == 0:
+            return None
         for obj in all_obj:
             if obj.id == id:
                 return obj
