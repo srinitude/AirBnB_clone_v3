@@ -1,17 +1,20 @@
 #!/usr/bin/python3
 from flask import Flask, Blueprint, jsonify
 from models import storage
-from api.v1.views import app_views
+from api.v1.views import app_views, states
 import os
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 app.register_blueprint(app_views, url_prefix="/api/v1")
+app.register_blueprint(states, url_prefix="/api/v1/states")
 
 
 @app.teardown_appcontext
 def close(f):
     """ app teardown """
     storage.close()
+
 
 @app.errorhandler(404)
 def page_not_found(error):
