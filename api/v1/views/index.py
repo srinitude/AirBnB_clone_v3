@@ -2,9 +2,11 @@
 """
 App views
 """
-from api.v1.views import app_views
-from flask import jsonify
+from api.v1.views import *
+from flask import jsonify, Blueprint
 from models import storage
+
+app_views = Blueprint("app_views", __name__)
 
 
 @app_views.route("/status")

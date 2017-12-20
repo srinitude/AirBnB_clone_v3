@@ -2,11 +2,12 @@
 """
 All of the routes for state resource
 """
-from api.v1.views import states
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, Blueprint
 from models import storage
 from models.state import State
 from models.city import City
+
+states = Blueprint("states", __name__)
 
 
 @states.route("/", methods=['GET'])
