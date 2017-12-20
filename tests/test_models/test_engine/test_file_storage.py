@@ -93,7 +93,10 @@ class TestFileStorage(unittest.TestCase):
 
     def test_save(self):
         """Test that save properly saves objects to file.json"""
-        os.remove("file.json")
+        try:
+            os.remove("file.json")
+        except:
+            pass
         storage = FileStorage()
         new_dict = {}
         for key, value in classes.items():
@@ -110,3 +113,50 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get_returns_none(self):
+        """Test that get with nothing in it properly returns None"""
+        try:
+            os.remove("file.json")
+        except:
+            pass
+        storage = FileStorage()
+        result = storage.get("User", "234htnfjkegr42--23q524yhwgeasgset")
+        self.assertEqual(result, None)
+
+    def test_count_returns_none(self):
+        """Test that count with nothing in it properly returns 0"""
+        try:
+            os.remove("file.json")
+        except:
+            pass
+        storage = FileStorage()
+        storage.reset()
+        result = storage.count()
+        self.assertEqual(result, 0)
+
+    def test_valid_get(self):
+        """Tests valid get"""
+        try:
+            os.remove("file.json")
+        except:
+            pass
+        storage = FileStorage()
+        storage.reset()
+        new_user = User()
+        storage.new(new_user)
+        user_result = storage.get("User", new_user.id)
+        self.assertEqual(id(new_user), id(user_result))
+
+    def test_valid_count(self):
+        """Tests valid count"""
+        try:
+            os.remove("file.json")
+        except:
+            pass
+        storage = FileStorage()
+        storage.reset()
+        new_user = User()
+        storage.new(new_user)
+        count = storage.count("User")
+        self.assertEqual(count, 1)

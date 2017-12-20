@@ -38,6 +38,7 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
+        """Returns all objects based on class passed"""
         if not self.__session:
             self.reload()
         objects = {}
@@ -53,22 +54,41 @@ class DBStorage:
         return objects
 
     def reload(self):
+        """Reloads DB session"""
         session_factory = sessionmaker(bind=self.__engine,
                                        expire_on_commit=False)
         Base.metadata.create_all(self.__engine)
         self.__session = scoped_session(session_factory)
 
     def new(self, obj):
+        """Adds object to session"""
         self.__session.add(obj)
 
     def save(self):
+        """Saves the current state of the session""" 
         self.__session.commit()
 
     def delete(self, obj=None):
+        """Deletes object from session"""
         if not self.__session:
             self.reload()
         if obj:
             self.__session.delete(obj)
+
+    def get(self, cls, id):
+        """Gets an object with a specific class and ID"""
+        all_obj = self.all(cls).values()
+        if len(all_obj) == 0:
+            return None
+        for obj in all_obj:
+            if obj.id == id:
+                return obj
+        return None
+
+    def count(self, cls=None):
+        """Returns the number of objects of particular class"""
+        all_obj = self.all(cls)
+        return len(all_obj)
 
     def close(self):
         """Dispose of current session if active"""

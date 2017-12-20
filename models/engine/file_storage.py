@@ -59,6 +59,21 @@ class FileStorage:
         except:
             pass
 
+    def get(self, cls, id):
+        """Gets an object"""
+        all_obj = self.all(cls).values()
+        if len(all_obj) == 0:
+            return None
+        for obj in all_obj:
+            if obj.id == id:
+                return obj
+        return None
+
+    def count(self, cls=None):
+        """Gets the count"""
+        all_obj = self.all(cls)
+        return len(all_obj)
+
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
         if obj is not None:
@@ -68,3 +83,8 @@ class FileStorage:
     def close(self):
         """Deserialize JSON file to objects"""
         self.reload()
+
+    def reset(self):
+        """Reset all objects in memory"""
+        self.save()
+        self.__objects = {}
