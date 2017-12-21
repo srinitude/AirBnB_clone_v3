@@ -4,7 +4,7 @@ All of the routes for city resource
 """
 from flask import jsonify, abort, request, Blueprint
 from models import storage
-from models.city import City
+from models.place import Place
 
 cities = Blueprint("cities", __name__)
 
@@ -48,4 +48,40 @@ def update_city_with_id(city_id):
         storage.save()
         storage.close()
         return jsonify(matching_city.to_dict())
+    abort(404)
+
+
+@cities.route("/<string:city_id>/places", methods=['GET'])
+def all_places(city_id):
+    """Route to get all of the place"""
+    places = storage.all("Place").values()
+    all_place = []
+    for place in places:
+        dict_form = place.to_dict()
+        all_place.append(dict_form)
+    return jsonify(all_place)
+
+
+@cities.route("/<string:city_id>/places", methods=['POST'])
+def create_place(city_id):
+    """Create a new place"""
+    if not request.is_json:
+        abort(400, "Not a JSON")
+    new_place = request.get_json()
+    if new_place.get("user_id") is None:
+        abort(400, "Missing user_id")
+    user_id = new_place.get("user_id")
+    if new_place.get("name") is None:
+        abort(400, "Missing name")
+    matching_city = storage.get("City", city_id)
+    matching_user = storage.get("User", user_id)
+    if matching_city and matching_user:
+        for key, val in new_place.items():
+                setattr(matching_city, key, val)
+        new_place["city_id"] = city_id
+        place_obj = Place(**new_place)
+        storage.new(place_obj)
+        storage.save()
+        storage.close()
+        return jsonify(place_obj.to_dict()), 201
     abort(404)
