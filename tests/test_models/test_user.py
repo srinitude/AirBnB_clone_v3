@@ -59,8 +59,6 @@ class TestUserDocs(unittest.TestCase):
 
 class TestUser(unittest.TestCase):
     """Test the User class"""
-    unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "Not Using MySQL")
-
     def test_is_subclass(self):
         """Test that User is a subclass of BaseModel"""
         user = User()
@@ -69,43 +67,31 @@ class TestUser(unittest.TestCase):
         self.assertTrue(hasattr(user, "created_at"))
         self.assertTrue(hasattr(user, "updated_at"))
 
-    unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "Not Using MySQL")
-
     def test_email_attr(self):
         """Test that User has attr email, and it's an empty string"""
         user = User()
         self.assertTrue(hasattr(user, "email"))
-
-    unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "Not Using MySQL")
 
     def test_password_attr(self):
         """Test that User has attr password, and it's an empty string"""
         user = User()
         self.assertTrue(hasattr(user, "password"))
 
-    unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "Not Using MySQL")
-
     def test_first_name_attr(self):
         """Test that User has attr first_name, and it's an empty string"""
         user = User()
         self.assertTrue(hasattr(user, "first_name"))
-
-    unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "Not Using MySQL")
 
     def test_last_name_attr(self):
         """Test that User has attr last_name, and it's an empty string"""
         user = User()
         self.assertTrue(hasattr(user, "last_name"))
 
-    unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "Not Using MySQL")
-
     def test_to_dict_creates_dict(self):
         """test to_dict method creates a dictionary with proper attrs"""
         u = User()
         new_d = u.to_dict()
         self.assertEqual(type(new_d), dict)
-
-    unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "Not Using MySQL")
 
     def test_to_dict_values(self):
         """test that values in dict returned from to_dict are correct"""
@@ -117,8 +103,6 @@ class TestUser(unittest.TestCase):
         self.assertEqual(type(new_d["updated_at"]), str)
         self.assertEqual(new_d["created_at"], u.created_at.strftime(t_format))
         self.assertEqual(new_d["updated_at"], u.updated_at.strftime(t_format))
-
-    unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "Not Using MySQL")
 
     def test_str(self):
         """test that the str method has the correct output"""
