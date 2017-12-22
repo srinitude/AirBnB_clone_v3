@@ -59,8 +59,9 @@ def all_places(city_id):
     matching_city = storage.get("City", city_id)
     if matching_city:
         for place in places:
-            dict_form = place.to_dict()
-            all_place.append(dict_form)
+            if place.city_id == city_id:
+                dict_form = place.to_dict()
+                all_place.append(dict_form)
         return jsonify(all_place)
     abort(404)
 
