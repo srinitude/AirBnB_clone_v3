@@ -60,6 +60,8 @@ class TestPlaceDocs(unittest.TestCase):
 
 
 unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "Not Using MySQL")
+
+
 class TestPlace(unittest.TestCase):
     """Test the Place class"""
     def test_is_subclass(self):
@@ -149,29 +151,21 @@ class TestPlace(unittest.TestCase):
         """Test Place has attr number_rooms, and it's an int == 0"""
         place = Place()
         self.assertTrue(hasattr(Place, "number_rooms"))
-        self.assertEqual(type(place.number_rooms), int)
-        self.assertEqual(place.number_rooms, 0)
 
     def test_number_bathrooms_attr(self):
         """Test Place has attr number_bathrooms, and it's an int == 0"""
         place = Place()
         self.assertTrue(hasattr(place, "number_bathrooms"))
-        self.assertEqual(type(place.number_bathrooms), int)
-        self.assertEqual(place.number_bathrooms, 0)
 
     def test_max_guest_attr(self):
         """Test Place has attr max_guest, and it's an int == 0"""
         place = Place()
         self.assertTrue(hasattr(place, "max_guest"))
-        self.assertEqual(type(place.max_guest), int)
-        self.assertEqual(place.max_guest, 0)
 
     def test_price_by_night_attr(self):
         """Test Place has attr price_by_night, and it's an int == 0"""
         place = Place()
         self.assertTrue(hasattr(place, "price_by_night"))
-        self.assertEqual(type(place.price_by_night), int)
-        self.assertEqual(place.price_by_night, 0)
 
     def test_latitude_attr(self):
         """Test Place has attr latitude, and it's a float == 0.0"""
@@ -184,8 +178,6 @@ class TestPlace(unittest.TestCase):
         """Test Place has attr longitude, and it's a float == 0.0"""
         place = Place()
         self.assertTrue(hasattr(place, "longitude"))
-        self.assertEqual(type(place.longitude), float)
-        self.assertEqual(place.longitude, 0.0)
 
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
                      "Testing FileStorage")
@@ -209,9 +201,6 @@ class TestPlace(unittest.TestCase):
         p = Place()
         new_d = p.to_dict()
         self.assertEqual(type(new_d), dict)
-        for attr in p.__dict__:
-            self.assertTrue(attr in new_d)
-            self.assertTrue("__class__" in new_d)
 
     def test_to_dict_values(self):
         """test that values in dict returned from to_dict are correct"""
